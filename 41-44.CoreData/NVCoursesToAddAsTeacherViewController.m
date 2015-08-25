@@ -9,6 +9,7 @@
 #import "NVCoursesToAddAsTeacherViewController.h"
 #import "NVPerson.h"
 #import "NVCourse.h"
+#import "NVPersonDetailViewController.h"
 @interface NVCoursesToAddAsTeacherViewController ()
 
 @end
@@ -29,7 +30,7 @@
     if ([self.person.managedObjectContext hasChanges]) {
         [self.person.managedObjectContext save:&error];
     }
-    
+    [self.delegate.tableView setNeedsDisplay];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void) actionCancel: (UIBarButtonItem*) sender {
@@ -93,8 +94,9 @@
         [self.person removeCoursesAsTeacherObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         cell.accessoryType=UITableViewCellAccessoryNone;
     } else {
-        [self.person addCoursesAsTeacherObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        NSLog(@"did select");
+        [self.person addCoursesAsTeacher:[NSSet setWithObject:[self.fetchedResultsController objectAtIndexPath:indexPath]]];
+        //[self.person addCoursesAsTeacherObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        NSLog(@"did select %@",[[self.fetchedResultsController objectAtIndexPath:indexPath] name]);
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }
 }

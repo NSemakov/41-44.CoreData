@@ -548,7 +548,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Zsf-f0-wvR">
                             <connections>
                                 <action selector="actionAddNewPerson:" destination="KNi-cI-UlC" id="DRM-RT-62H"/>
-                                <segue destination="1ig-6K-UyL" kind="presentation" identifier="addNewCourse" id="Z9a-qi-cCk"/>
+                                <segue destination="1ig-6K-UyL" kind="presentation" identifier="segueAddNewCourse" id="Z9a-qi-cCk"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -659,6 +659,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="VGj-4N-mJe"/>
+        <segue reference="xS6-A3-AY5"/>
     </inferredMetricsTieBreakers>
 </document>

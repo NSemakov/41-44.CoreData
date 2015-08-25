@@ -44,7 +44,7 @@ typedef NS_ENUM(NSInteger, textFieldType){
         NVPerson* newPerson=[NSEntityDescription insertNewObjectForEntityForName:@"NVPerson" inManagedObjectContext:context];
         self.person=newPerson;
     } else{
-        self.person=[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+       // self.person=[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         
     }
 }
@@ -246,8 +246,6 @@ typedef NS_ENUM(NSInteger, textFieldType){
     if ([textField isEqual:self.fieldFirstName]) {
         [self.fieldLastName becomeFirstResponder];
     } else if ([textField isEqual:self.fieldLastName]){
-        [self.fieldDateOfBirth becomeFirstResponder];
-    } else if ([textField isEqual:self.fieldDateOfBirth]){
         [self.fieldMail becomeFirstResponder];
     } else if ([textField isEqual:self.fieldMail]){
         [textField resignFirstResponder];
@@ -278,6 +276,7 @@ typedef NS_ENUM(NSInteger, textFieldType){
     }];
     UIAlertAction* asTeacher=[UIAlertAction actionWithTitle:@"Add course for teacher" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         [self performSegueWithIdentifier:@"segueAddTeacher" sender:nil];
+        
     }];
     UIAlertAction* cancel=[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
         //[self dismissViewControllerAnimated:YES completion:nil];
@@ -303,6 +302,7 @@ typedef NS_ENUM(NSInteger, textFieldType){
     } else if ([segue.identifier isEqualToString:@"segueAddTeacher"]) {
         NVCoursesToAddAsTeacherViewController* vc=(NVCoursesToAddAsTeacherViewController*)[segue.destinationViewController topViewController];
         vc.person=self.person;
+        vc.delegate=self;
     }
 }
 @end

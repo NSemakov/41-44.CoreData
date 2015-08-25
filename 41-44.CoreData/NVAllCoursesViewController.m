@@ -87,11 +87,12 @@
     //show modal. made in story board
 }
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"segueAddNewPerson"]) {
+    if ([segue.identifier isEqualToString:@"segueAddNewCourse"]) {
         //UINavigationController* nav=segue.destinationViewController;
         //NVPersonDetailViewController* pdvc=[nav topViewController];
         
     }
+#warning pay attention at segue identifier
     if ([segue.identifier isEqualToString:@"segueEditPerson"]) {
         UINavigationController* nav=segue.destinationViewController;
         NVPersonDetailViewController* pdvc=(NVPersonDetailViewController*)[nav topViewController];
