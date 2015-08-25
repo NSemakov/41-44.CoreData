@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84BBBD341B8C991E003DE51D /* NVCoursesToAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BBBD331B8C991E003DE51D /* NVCoursesToAddViewController.m */; };
 		84E4A7AD1B8B905500B68722 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A7AC1B8B905500B68722 /* main.m */; };
 		84E4A7B01B8B905500B68722 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A7AF1B8B905500B68722 /* AppDelegate.m */; };
 		84E4A7B31B8B905500B68722 /* _1_44_CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A7B11B8B905500B68722 /* _1_44_CoreData.xcdatamodeld */; };
@@ -37,6 +38,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84BBBD321B8C991E003DE51D /* NVCoursesToAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVCoursesToAddViewController.h; sourceTree = "<group>"; };
+		84BBBD331B8C991E003DE51D /* NVCoursesToAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVCoursesToAddViewController.m; sourceTree = "<group>"; };
 		84E4A7A71B8B905500B68722 /* 41-44.CoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "41-44.CoreData.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E4A7AB1B8B905500B68722 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E4A7AC1B8B905500B68722 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -175,6 +178,8 @@
 			isa = PBXGroup;
 			children = (
 				84E4A8151B8B9A0A00B68722 /* NVParentViewController.h */,
+				84BBBD321B8C991E003DE51D /* NVCoursesToAddViewController.h */,
+				84BBBD331B8C991E003DE51D /* NVCoursesToAddViewController.m */,
 				84E4A8161B8B9A0A00B68722 /* NVParentViewController.m */,
 				84E4A8211B8BAED500B68722 /* NVAllPersonsViewController.h */,
 				84E4A8221B8BAED500B68722 /* NVAllPersonsViewController.m */,
@@ -294,6 +299,7 @@
 			files = (
 				84E4A82E1B8C171B00B68722 /* NVDatePickerController.m in Sources */,
 				84E4A82B1B8BF8EF00B68722 /* NVTableViewCellCustom.m in Sources */,
+				84BBBD341B8C991E003DE51D /* NVCoursesToAddViewController.m in Sources */,
 				84E4A8171B8B9A0A00B68722 /* NVParentViewController.m in Sources */,
 				84E4A7B01B8B905500B68722 /* AppDelegate.m in Sources */,
 				84E4A7AD1B8B905500B68722 /* main.m in Sources */,
@@ -501,6 +507,7 @@
 				84E4A7CF1B8B905500B68722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		84E4A7D01B8B905500B68722 /* Build configuration list for PBXNativeTarget "41-44.CoreDataTests" */ = {
 			isa = XCConfigurationList;
@@ -509,6 +516,7 @@
 				84E4A7D21B8B905500B68722 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

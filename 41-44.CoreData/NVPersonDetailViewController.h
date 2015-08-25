@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "NVPerson.h"
+#import "NVParentViewController.h"
 #import <CoreData/CoreData.h>
-@interface NVPersonDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+@interface NVPersonDetailViewController : NVParentViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
 - (IBAction)actionCancelButton:(UIBarButtonItem *)sender;
-- (IBAction)actionDone:(UIBarButtonItem *)sender;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+//@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong,nonatomic) NVPerson* person;
 
 @property (strong,nonatomic) UITextField* fieldFirstName;

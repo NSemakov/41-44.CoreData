@@ -29,6 +29,7 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NVPerson *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",object.firstName, object.lastName];
+    cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     // [object valueForKey:@"firstName"];
 }
 /*
@@ -59,7 +60,7 @@
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:@"Master"];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -73,6 +74,15 @@
     
     return _fetchedResultsController;
 }
+#pragma mark - UITableViewDataSource
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:@"segueEditPerson" sender:indexPath];
+    
+}
+
+#pragma mark - Actions
 - (IBAction)actionAddNewPerson:(UIBarButtonItem *)sender {
     //show modal. made in story board
 }
@@ -81,6 +91,11 @@
         //UINavigationController* nav=segue.destinationViewController;
         //NVPersonDetailViewController* pdvc=[nav topViewController];
         
+    }
+    if ([segue.identifier isEqualToString:@"segueEditPerson"]) {
+        UINavigationController* nav=segue.destinationViewController;
+        NVPersonDetailViewController* pdvc=(NVPersonDetailViewController*)[nav topViewController];
+        pdvc.person=[self.fetchedResultsController objectAtIndexPath:(NSIndexPath *)sender];
     }
 }
 @end

@@ -113,6 +113,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="5oi-DW-Q35" id="Cv4-uV-mT1"/>
+                        <segue destination="R4T-bp-zGX" kind="presentation" identifier="segueEditPerson" id="xS6-A3-AY5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VTJ-qx-OQ3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -133,9 +134,9 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gQJ-KR-Azd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2143" y="-58"/>
+            <point key="canvasLocation" x="2150" y="-58"/>
         </scene>
-        <!--Person Detail View Controller-->
+        <!--Detail person info-->
         <scene sceneID="zxm-Lf-ONT">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="57a-DD-fA5" customClass="NVPersonDetailViewController" sceneMemberID="viewController">
@@ -307,20 +308,16 @@
                             <constraint firstItem="Tia-t3-34L" firstAttribute="leading" secondItem="ANI-HZ-ZTA" secondAttribute="leading" id="xm3-cA-wBa"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="V6X-ov-uVg">
+                    <navigationItem key="navigationItem" title="Detail person info" id="V6X-ov-uVg">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="FOv-0t-Nq1">
                             <connections>
                                 <action selector="actionCancelButton:" destination="57a-DD-fA5" id="aFj-bN-f6y"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="bV4-Ai-FBT">
-                            <connections>
-                                <action selector="actionDone:" destination="57a-DD-fA5" id="B0g-2n-rl2"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Tia-t3-34L" id="jys-5J-rif"/>
+                        <segue destination="7Zp-vG-RPl" kind="presentation" identifier="segueShowCourses" id="G3p-k8-buk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n9d-fb-OHL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -343,7 +340,50 @@
             </objects>
             <point key="canvasLocation" x="3545" y="-117"/>
         </scene>
-        <!--Date Picker Controller-->
+        <!--Courses-->
+        <scene sceneID="DrG-Uk-J0x">
+            <objects>
+                <tableViewController id="STd-JF-G2b" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tDX-ra-Iti">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="rIs-QN-qhl">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rIs-QN-qhl" id="dnz-Ng-Yvm">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="STd-JF-G2b" id="cZx-yX-4Cg"/>
+                            <outlet property="delegate" destination="STd-JF-G2b" id="vn7-ux-LHU"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Courses" id="TdK-13-Oxl"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="slZ-ut-IxC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4205" y="595"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="dg7-VO-Pwh">
+            <objects>
+                <navigationController id="7Zp-vG-RPl" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="apx-Jl-Xdb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="STd-JF-G2b" kind="relationship" relationship="rootViewController" id="zaz-tu-E9L"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gwh-8l-doR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3554" y="595"/>
+        </scene>
+        <!--Choose date of birth-->
         <scene sceneID="GzQ-Cb-AZi">
             <objects>
                 <viewController id="wev-Ut-TMs" customClass="NVDatePickerController" sceneMemberID="viewController">
@@ -373,7 +413,7 @@
                             <constraint firstItem="cga-uL-aCs" firstAttribute="leading" secondItem="Z6d-6G-f0L" secondAttribute="leadingMargin" constant="-16" id="bif-Ed-vtw"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="56s-2n-vN2">
+                    <navigationItem key="navigationItem" title="Choose date of birth" id="56s-2n-vN2">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="QuK-pk-Nk0">
                             <connections>
                                 <action selector="actionDone:" destination="wev-Ut-TMs" id="20b-Gl-6kd"/>
@@ -392,7 +432,7 @@
         <scene sceneID="Zdl-Ic-Ggf">
             <objects>
                 <tabBarController id="KxA-CC-ysS" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Bbv-Ys-UNd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -410,4 +450,7 @@
             <point key="canvasLocation" x="-38" y="245"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="VGj-4N-mJe"/>
+    </inferredMetricsTieBreakers>
 </document>

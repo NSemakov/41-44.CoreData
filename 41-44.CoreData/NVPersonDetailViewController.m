@@ -21,11 +21,15 @@ typedef NS_ENUM(NSInteger, textFieldType){
 @end
 
 @implementation NVPersonDetailViewController
-
+@synthesize fetchedResultsController=_fetchedResultsController;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.formatter=[[NSDateFormatter alloc]init];
     [self.formatter setDateFormat:@"dd.MM.yyyy"];
+    //self.fetchedResultsController;
+    UIBarButtonItem* buttonDone=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(actionDone:)];
+    UIBarButtonItem* buttonAddNew=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(actionAddNew:)];
+    self.navigationItem.rightBarButtonItems=@[buttonDone,buttonAddNew];
     
 }
 
@@ -33,19 +37,80 @@ typedef NS_ENUM(NSInteger, textFieldType){
     [super viewDidAppear:YES];
     NSManagedObjectContext* context=[[NVDataManager sharedManager] managedObjectContext];
     NVPerson* newPerson=[NSEntityDescription insertNewObjectForEntityForName:@"NVPerson" inManagedObjectContext:context];
-    self.person=newPerson;
+    if (!self.person) {
+        //if exist, then it is editing. If not - new object.
+        self.person=newPerson;
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+- (NSFetchedResultsController *)fetchedResultsController
+{
+    if (_fetchedResultsController != nil) {
+        return _fetchedResultsController;
+    }
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NVPerson" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"coursesAsStudent",@"coursesAsTeacher"]];
+
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstName" ascending:YES];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    //NSManagedObjectID *moID=[self.person objectID];
+    NSPredicate* predicate=[NSPredicate predicateWithFormat:@"(SELF = %@)",self.person];
+    [fetchRequest setPredicate:predicate];
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    aFetchedResultsController.delegate = self;
+    self.fetchedResultsController = aFetchedResultsController;
+    
+    NSError *error = nil;
+    if (![self.fetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    self.person=[self.fetchedResultsController sections][0];
+    return _fetchedResultsController;
+}
+
 #pragma mark - UITableViewDataSource
 
-
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    if ([self.person.firstName length]>0) {
+        //editing object
+        return 1+([self.person.coursesAsStudent count]>0)+([self.person.coursesAsTeacher count]>0);
+    } else {
+        //create new
+        return 1;
+    }
+    
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-#warning dlfj
-    return 4;
+    if (section==0) {
+        return 4;
+    } else if (section==1) {
+        return [self.person.coursesAsStudent count];
+    } else if (section==2) {
+        return [self.person.coursesAsTeacher count];
+    } else {
+        return 0;
+    }
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -57,15 +122,23 @@ typedef NS_ENUM(NSInteger, textFieldType){
             case textFieldTypeFirstName:{
                 static NSString* cellFirstName=@"cellFirstName";
                 customCell=[tableView dequeueReusableCellWithIdentifier:cellFirstName];
+                if (self.person.firstName) {
+                    //if edit existing person
+                    customCell.textfield.text=self.person.firstName;
+                }
                 if (self.fieldFirstName) {
+                    //to save text if scrolling up&down
                     customCell.textfield.text=self.fieldFirstName.text;
                 }
                 self.fieldFirstName=customCell.textfield;
-                
             } break;
             case textFieldTypeLastName:{
                 static NSString* cellLastName=@"cellLastName";
                 customCell=[tableView dequeueReusableCellWithIdentifier:cellLastName];
+                if (self.person.lastName) {
+                    //if edit existing person
+                    customCell.textfield.text=self.person.lastName;
+                }
                 if (self.fieldLastName) {
                     customCell.textfield.text=self.fieldFirstName.text;
                 }
@@ -74,6 +147,10 @@ typedef NS_ENUM(NSInteger, textFieldType){
             case textFieldTypeDateOfBirth:{
                 static NSString* cellDateOfBirth=@"cellDateOfBirth";
                 customCell=[tableView dequeueReusableCellWithIdentifier:cellDateOfBirth];
+                if (self.person.dateOfBirth) {
+                    //if edit existing person
+                    customCell.textfield.text=[self.formatter stringFromDate:self.person.dateOfBirth];
+                }
                 if (self.fieldDateOfBirth) {
                     customCell.textfield.text=self.fieldFirstName.text;
                 }
@@ -82,6 +159,11 @@ typedef NS_ENUM(NSInteger, textFieldType){
             case textFieldTypeMail:{
                 static NSString* cellMail=@"cellMail";
                 customCell=[tableView dequeueReusableCellWithIdentifier:cellMail];
+                if (self.person.mail) {
+                    //if edit existing person
+                    customCell.textfield.text=self.person.mail;
+                }
+
                 if (self.fieldMail) {
                     customCell.textfield.text=self.fieldFirstName.text;
                 }
@@ -95,14 +177,36 @@ typedef NS_ENUM(NSInteger, textFieldType){
         return customCell;
     }
     
-    //configure standart cell
-    static NSString* standartCellIdentifier=@"standartCell";
+    //configure standard cell
+    static NSString* standartCellIdentifier=@"standardCell";
     cell=[tableView dequeueReusableCellWithIdentifier:standartCellIdentifier];
     if (!cell) {
         cell=[[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:standartCellIdentifier];
     }
+    
+    if (([self.person.coursesAsStudent count]>0) && ([self.person.coursesAsTeacher count]>0)) {
+        if (indexPath.section==1) {
+            cell.textLabel.text=[[[self.person.coursesAsStudent allObjects] objectAtIndex:indexPath.row] name];
+        } else if (indexPath.section==2){
+            cell.textLabel.text=[[[self.person.coursesAsTeacher allObjects] objectAtIndex:indexPath.row] name];
+        }
+    } else if ([self.person.coursesAsStudent count]>0){
+        if (indexPath.section==1) {
+            cell.textLabel.text=[[[self.person.coursesAsStudent allObjects] objectAtIndex:indexPath.row] name];
+        }
+    } else if ([self.person.coursesAsTeacher count]>0){
+        if (indexPath.section==2){
+            cell.textLabel.text=[[[self.person.coursesAsTeacher allObjects] objectAtIndex:indexPath.row] name];
+        }
+
+    }
     return cell;
     
+}
+- (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
+   // NSManagedObject *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    //cell.textLabel.text = [[object valueForKey:@"timeStamp"] description];
+#warning pay attention
 }
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -120,14 +224,12 @@ typedef NS_ENUM(NSInteger, textFieldType){
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if ([textField isEqual:self.fieldFirstName]) {
-        [self.person setValue:string forKey:@"firstName"];
+        [self.person setValue:[textField.text stringByAppendingString:string] forKey:@"firstName"];
         //self.person.firstName=textField.text;
     } else if ([textField isEqual:self.fieldLastName]){
-        self.person.lastName=string;
-    } else if ([textField isEqual:self.fieldDateOfBirth]){
-        self.person.dateOfBirth=[self.formatter dateFromString:string];
+        self.person.lastName=[textField.text stringByAppendingString:string];
     } else if ([textField isEqual:self.fieldMail]){
-        self.person.mail=string;
+        self.person.mail=[textField.text stringByAppendingString:string];;
     }
     return YES;
 }
@@ -149,7 +251,7 @@ typedef NS_ENUM(NSInteger, textFieldType){
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (IBAction)actionDone:(UIBarButtonItem *)sender {
+- (void) actionDone:(UIBarButtonItem *)sender {
     NSLog(@"name %@, lastname %@",self.person.firstName,self.person.lastName);
     NSError* error=[NSError errorWithDomain:@"nvpersonDetailVC" code:111 userInfo:nil];
     if (![[[NVDataManager sharedManager] managedObjectContext] save:&error]) {
@@ -157,9 +259,40 @@ typedef NS_ENUM(NSInteger, textFieldType){
     } else {
         NSLog(@"ok");
     }
-    
-    
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void) actionAddNew:(UIBarButtonItem *)sender {
+    UIAlertController* ac=[UIAlertController alertControllerWithTitle:@"Choose smth to add/edit" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    /*
+     self.alertCtrl=[UIAlertController alertControllerWithTitle:@"Input folder name" message:@"please" preferredStyle:UIAlertControllerStyleAlert];
+     [self.alertCtrl addTextFieldWithConfigurationHandler:^(UITextField *textField) {
+     textField.placeholder=@"New folder name";
+     }];
+     
+     UIAlertAction* okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+     UITextField* field=self.alertCtrl.textFields.firstObject;
+     [self handleNameOfNewFolder:field.text];
+     }];
+     UIAlertAction* cancelAction=[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+     [self dismissViewControllerAnimated:YES completion:nil];
+     }];
+     [self.alertCtrl addAction:okAction];
+     [self.alertCtrl addAction:cancelAction];
+     [self presentViewController:self.alertCtrl animated:YES completion:nil];
+     */
+    UIAlertAction* asStudent=[UIAlertAction actionWithTitle:@"Add course for student" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self performSegueWithIdentifier:@"segueShowCourses" sender:nil];
+    }];
+    UIAlertAction* asTeacher=[UIAlertAction actionWithTitle:@"Add course for teacher" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        [self performSegueWithIdentifier:@"segueShowCourses" sender:nil];
+    }];
+    UIAlertAction* cancel=[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    [ac addAction:asStudent];
+    [ac addAction:asTeacher];
+    [ac addAction:cancel];
+    [self presentViewController:ac animated:YES completion:nil];
 }
 #pragma mark - prepareForSegue
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
@@ -170,6 +303,8 @@ typedef NS_ENUM(NSInteger, textFieldType){
         if ([self.fieldDateOfBirth.text length]>0) {
             vc.initialDate=self.fieldDateOfBirth.text;
         }
+        
+    } else if ([segue.identifier isEqualToString:@"segueShowCourses"]) {
         
     }
 }
