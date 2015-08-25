@@ -238,6 +238,7 @@
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                                                     <connections>
                                                         <outlet property="delegate" destination="57a-DD-fA5" id="Wxt-uo-7VW"/>
+                                                        <segue destination="zfo-ys-2Ty" kind="presentation" identifier="segueDatePicker" id="zvR-KI-Zge"/>
                                                     </connections>
                                                 </textField>
                                             </subviews>
@@ -307,6 +308,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="V6X-ov-uVg">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="FOv-0t-Nq1">
+                            <connections>
+                                <action selector="actionCancelButton:" destination="57a-DD-fA5" id="aFj-bN-f6y"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="bV4-Ai-FBT">
                             <connections>
                                 <action selector="actionDone:" destination="57a-DD-fA5" id="B0g-2n-rl2"/>
@@ -320,6 +326,67 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n9d-fb-OHL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2780" y="-58"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="XWu-l1-qji">
+            <objects>
+                <navigationController id="zfo-ys-2Ty" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="BCV-Xv-uFe">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="wev-Ut-TMs" kind="relationship" relationship="rootViewController" id="0M3-LH-RKx"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MJ7-kv-R4g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3545" y="-117"/>
+        </scene>
+        <!--Date Picker Controller-->
+        <scene sceneID="GzQ-Cb-AZi">
+            <objects>
+                <viewController id="wev-Ut-TMs" customClass="NVDatePickerController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nRd-Nc-mJf"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Do-t4-ClE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Z6d-6G-f0L">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="cga-uL-aCs">
+                                <rect key="frame" x="0.0" y="219" width="600" height="162"/>
+                                <date key="date" timeIntervalSinceReferenceDate="462165941.89258301">
+                                    <!--2015-08-25 03:25:41 +0000-->
+                                </date>
+                                <connections>
+                                    <action selector="actionValueChanged:" destination="wev-Ut-TMs" eventType="valueChanged" id="XdJ-jx-TJg"/>
+                                </connections>
+                            </datePicker>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="cga-uL-aCs" secondAttribute="centerX" id="CZ8-Ip-nTj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cga-uL-aCs" secondAttribute="trailing" constant="-16" id="OsK-dL-vfN"/>
+                            <constraint firstAttribute="centerY" secondItem="cga-uL-aCs" secondAttribute="centerY" id="bNY-dI-Xr0"/>
+                            <constraint firstItem="cga-uL-aCs" firstAttribute="leading" secondItem="Z6d-6G-f0L" secondAttribute="leadingMargin" constant="-16" id="bif-Ed-vtw"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="56s-2n-vN2">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="QuK-pk-Nk0">
+                            <connections>
+                                <action selector="actionDone:" destination="wev-Ut-TMs" id="20b-Gl-6kd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="datePicker" destination="cga-uL-aCs" id="ryp-gx-bQ2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Ot-AI-YWj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4232" y="-117"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Zdl-Ic-Ggf">

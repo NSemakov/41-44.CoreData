@@ -10,6 +10,7 @@
 #import "NVPerson.h"
 #import <CoreData/CoreData.h>
 @interface NVPersonDetailViewController : UIViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+- (IBAction)actionCancelButton:(UIBarButtonItem *)sender;
 - (IBAction)actionDone:(UIBarButtonItem *)sender;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong,nonatomic) NVPerson* person;

@@ -23,6 +23,7 @@
 		84E4A8231B8BAED500B68722 /* NVAllPersonsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A8221B8BAED500B68722 /* NVAllPersonsViewController.m */; };
 		84E4A8271B8BBF5200B68722 /* NVPersonDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A8261B8BBF5200B68722 /* NVPersonDetailViewController.m */; };
 		84E4A82B1B8BF8EF00B68722 /* NVTableViewCellCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A82A1B8BF8EF00B68722 /* NVTableViewCellCustom.m */; };
+		84E4A82E1B8C171B00B68722 /* NVDatePickerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A82D1B8C171B00B68722 /* NVDatePickerController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,8 @@
 		84E4A8261B8BBF5200B68722 /* NVPersonDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVPersonDetailViewController.m; sourceTree = "<group>"; };
 		84E4A8291B8BF8EF00B68722 /* NVTableViewCellCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTableViewCellCustom.h; sourceTree = "<group>"; };
 		84E4A82A1B8BF8EF00B68722 /* NVTableViewCellCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVTableViewCellCustom.m; sourceTree = "<group>"; };
+		84E4A82C1B8C171B00B68722 /* NVDatePickerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVDatePickerController.h; sourceTree = "<group>"; };
+		84E4A82D1B8C171B00B68722 /* NVDatePickerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVDatePickerController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +117,8 @@
 				84E4A7B51B8B905500B68722 /* ViewController.m */,
 				84E4A8291B8BF8EF00B68722 /* NVTableViewCellCustom.h */,
 				84E4A82A1B8BF8EF00B68722 /* NVTableViewCellCustom.m */,
+				84E4A82C1B8C171B00B68722 /* NVDatePickerController.h */,
+				84E4A82D1B8C171B00B68722 /* NVDatePickerController.m */,
 				84E4A8281B8BBF5C00B68722 /* DetailViewControllers */,
 				84E4A8241B8BAEE300B68722 /* DataViewControllers */,
 				84E4A81F1B8BA57D00B68722 /* NVDataManager.m */,
@@ -287,6 +292,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84E4A82E1B8C171B00B68722 /* NVDatePickerController.m in Sources */,
 				84E4A82B1B8BF8EF00B68722 /* NVTableViewCellCustom.m in Sources */,
 				84E4A8171B8B9A0A00B68722 /* NVParentViewController.m in Sources */,
 				84E4A7B01B8B905500B68722 /* AppDelegate.m in Sources */,

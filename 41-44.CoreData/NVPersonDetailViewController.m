@@ -9,6 +9,7 @@
 #import "NVPersonDetailViewController.h"
 #import "NVDataManager.h"
 #import "NVTableViewCellCustom.h"
+#import "NVDatePickerController.h"
 typedef NS_ENUM(NSInteger, textFieldType){
     textFieldTypeFirstName,
     textFieldTypeLastName,
@@ -109,13 +110,14 @@ typedef NS_ENUM(NSInteger, textFieldType){
 }
 #pragma mark - UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField{
-    if ([textField isEqual:self.fieldMail]) {
-        
+    if ([textField isEqual:self.fieldDateOfBirth]) {
+        [self performSegueWithIdentifier:@"segueDatePicker" sender:nil];
         return NO;
     } else {
         return YES;
     }
 }
+
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string{
     if ([textField isEqual:self.fieldFirstName]) {
         [self.person setValue:string forKey:@"firstName"];
@@ -142,6 +144,11 @@ typedef NS_ENUM(NSInteger, textFieldType){
     return YES;
 }
 #pragma mark - Actions
+- (IBAction)actionCancelButton:(UIBarButtonItem *)sender {
+    [[[NVDataManager sharedManager] managedObjectContext] rollback];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (IBAction)actionDone:(UIBarButtonItem *)sender {
     NSLog(@"name %@, lastname %@",self.person.firstName,self.person.lastName);
     NSError* error=[NSError errorWithDomain:@"nvpersonDetailVC" code:111 userInfo:nil];
@@ -153,5 +160,17 @@ typedef NS_ENUM(NSInteger, textFieldType){
     
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+#pragma mark - prepareForSegue
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if ([segue.identifier isEqualToString:@"segueDatePicker"]) {
+        NVDatePickerController* vc=(NVDatePickerController*)[segue.destinationViewController topViewController];
+        vc.formatter=self.formatter;
+        vc.delegate=self;
+        if ([self.fieldDateOfBirth.text length]>0) {
+            vc.initialDate=self.fieldDateOfBirth.text;
+        }
+        
+    }
 }
 @end

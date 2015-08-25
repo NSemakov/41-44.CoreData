@@ -28,7 +28,8 @@
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     NVPerson *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    cell.textLabel.text = [object valueForKey:@"firstName"];
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",object.firstName, object.lastName];
+    // [object valueForKey:@"firstName"];
 }
 /*
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
@@ -73,7 +74,7 @@
     return _fetchedResultsController;
 }
 - (IBAction)actionAddNewPerson:(UIBarButtonItem *)sender {
-    
+    //show modal. made in story board
 }
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"segueAddNewPerson"]) {
