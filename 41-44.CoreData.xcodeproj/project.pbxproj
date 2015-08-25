@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		84BBBD341B8C991E003DE51D /* NVCoursesToAddViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BBBD331B8C991E003DE51D /* NVCoursesToAddViewController.m */; };
+		84BBBD341B8C991E003DE51D /* NVCoursesToAddAsStudentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BBBD331B8C991E003DE51D /* NVCoursesToAddAsStudentViewController.m */; };
+		84BBBD371B8CA9EB003DE51D /* NVCoursesToAddAsTeacherViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84BBBD361B8CA9EB003DE51D /* NVCoursesToAddAsTeacherViewController.m */; };
 		84E4A7AD1B8B905500B68722 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A7AC1B8B905500B68722 /* main.m */; };
 		84E4A7B01B8B905500B68722 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A7AF1B8B905500B68722 /* AppDelegate.m */; };
 		84E4A7B31B8B905500B68722 /* _1_44_CoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 84E4A7B11B8B905500B68722 /* _1_44_CoreData.xcdatamodeld */; };
@@ -38,8 +39,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		84BBBD321B8C991E003DE51D /* NVCoursesToAddViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVCoursesToAddViewController.h; sourceTree = "<group>"; };
-		84BBBD331B8C991E003DE51D /* NVCoursesToAddViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVCoursesToAddViewController.m; sourceTree = "<group>"; };
+		84BBBD321B8C991E003DE51D /* NVCoursesToAddAsStudentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVCoursesToAddAsStudentViewController.h; sourceTree = "<group>"; };
+		84BBBD331B8C991E003DE51D /* NVCoursesToAddAsStudentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVCoursesToAddAsStudentViewController.m; sourceTree = "<group>"; };
+		84BBBD351B8CA9EB003DE51D /* NVCoursesToAddAsTeacherViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVCoursesToAddAsTeacherViewController.h; sourceTree = "<group>"; };
+		84BBBD361B8CA9EB003DE51D /* NVCoursesToAddAsTeacherViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVCoursesToAddAsTeacherViewController.m; sourceTree = "<group>"; };
 		84E4A7A71B8B905500B68722 /* 41-44.CoreData.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "41-44.CoreData.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		84E4A7AB1B8B905500B68722 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84E4A7AC1B8B905500B68722 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -92,6 +95,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		84BBBD381B8CADB1003DE51D /* Add&EditViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				84BBBD321B8C991E003DE51D /* NVCoursesToAddAsStudentViewController.h */,
+				84BBBD331B8C991E003DE51D /* NVCoursesToAddAsStudentViewController.m */,
+				84BBBD351B8CA9EB003DE51D /* NVCoursesToAddAsTeacherViewController.h */,
+				84BBBD361B8CA9EB003DE51D /* NVCoursesToAddAsTeacherViewController.m */,
+			);
+			name = "Add&EditViewControllers";
+			sourceTree = "<group>";
+		};
 		84E4A79E1B8B905400B68722 = {
 			isa = PBXGroup;
 			children = (
@@ -114,14 +128,15 @@
 			isa = PBXGroup;
 			children = (
 				84E4A7AE1B8B905500B68722 /* AppDelegate.h */,
-				84E4A7DC1B8B989600B68722 /* NSManagedObject */,
 				84E4A7AF1B8B905500B68722 /* AppDelegate.m */,
+				84E4A7DC1B8B989600B68722 /* NSManagedObject */,
 				84E4A7B41B8B905500B68722 /* ViewController.h */,
 				84E4A7B51B8B905500B68722 /* ViewController.m */,
 				84E4A8291B8BF8EF00B68722 /* NVTableViewCellCustom.h */,
 				84E4A82A1B8BF8EF00B68722 /* NVTableViewCellCustom.m */,
 				84E4A82C1B8C171B00B68722 /* NVDatePickerController.h */,
 				84E4A82D1B8C171B00B68722 /* NVDatePickerController.m */,
+				84BBBD381B8CADB1003DE51D /* Add&EditViewControllers */,
 				84E4A8281B8BBF5C00B68722 /* DetailViewControllers */,
 				84E4A8241B8BAEE300B68722 /* DataViewControllers */,
 				84E4A81F1B8BA57D00B68722 /* NVDataManager.m */,
@@ -178,8 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				84E4A8151B8B9A0A00B68722 /* NVParentViewController.h */,
-				84BBBD321B8C991E003DE51D /* NVCoursesToAddViewController.h */,
-				84BBBD331B8C991E003DE51D /* NVCoursesToAddViewController.m */,
 				84E4A8161B8B9A0A00B68722 /* NVParentViewController.m */,
 				84E4A8211B8BAED500B68722 /* NVAllPersonsViewController.h */,
 				84E4A8221B8BAED500B68722 /* NVAllPersonsViewController.m */,
@@ -299,7 +312,7 @@
 			files = (
 				84E4A82E1B8C171B00B68722 /* NVDatePickerController.m in Sources */,
 				84E4A82B1B8BF8EF00B68722 /* NVTableViewCellCustom.m in Sources */,
-				84BBBD341B8C991E003DE51D /* NVCoursesToAddViewController.m in Sources */,
+				84BBBD341B8C991E003DE51D /* NVCoursesToAddAsStudentViewController.m in Sources */,
 				84E4A8171B8B9A0A00B68722 /* NVParentViewController.m in Sources */,
 				84E4A7B01B8B905500B68722 /* AppDelegate.m in Sources */,
 				84E4A7AD1B8B905500B68722 /* main.m in Sources */,
@@ -307,6 +320,7 @@
 				84E4A7D81B8B989000B68722 /* NVPerson.m in Sources */,
 				84E4A8201B8BA57D00B68722 /* NVDataManager.m in Sources */,
 				84E4A8231B8BAED500B68722 /* NVAllPersonsViewController.m in Sources */,
+				84BBBD371B8CA9EB003DE51D /* NVCoursesToAddAsTeacherViewController.m in Sources */,
 				84E4A7D51B8B989000B68722 /* NVCourse.m in Sources */,
 				84E4A7B61B8B905500B68722 /* ViewController.m in Sources */,
 				84E4A7DB1B8B989100B68722 /* NVParentObject.m in Sources */,

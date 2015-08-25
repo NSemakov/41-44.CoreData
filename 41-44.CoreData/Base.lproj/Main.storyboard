@@ -318,6 +318,7 @@
                     <connections>
                         <outlet property="tableView" destination="Tia-t3-34L" id="jys-5J-rif"/>
                         <segue destination="7Zp-vG-RPl" kind="presentation" identifier="segueShowCourses" id="G3p-k8-buk"/>
+                        <segue destination="MZK-CE-KHI" kind="presentation" identifier="segueAddTeacher" id="XNc-Gi-4G5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n9d-fb-OHL" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -340,33 +341,6 @@
             </objects>
             <point key="canvasLocation" x="3545" y="-117"/>
         </scene>
-        <!--Courses-->
-        <scene sceneID="DrG-Uk-J0x">
-            <objects>
-                <tableViewController id="STd-JF-G2b" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="tDX-ra-Iti">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="rIs-QN-qhl">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rIs-QN-qhl" id="dnz-Ng-Yvm">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="STd-JF-G2b" id="cZx-yX-4Cg"/>
-                            <outlet property="delegate" destination="STd-JF-G2b" id="vn7-ux-LHU"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" title="Courses" id="TdK-13-Oxl"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="slZ-ut-IxC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="4205" y="595"/>
-        </scene>
         <!--Navigation Controller-->
         <scene sceneID="dg7-VO-Pwh">
             <objects>
@@ -376,12 +350,46 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="STd-JF-G2b" kind="relationship" relationship="rootViewController" id="zaz-tu-E9L"/>
+                        <segue destination="3Ww-8D-rOB" kind="relationship" relationship="rootViewController" id="wvX-Od-xeM"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gwh-8l-doR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3554" y="595"/>
+        </scene>
+        <!--Tap to add/remove courses-->
+        <scene sceneID="aDh-7h-7w1">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="3Ww-8D-rOB" customClass="NVCoursesToAddAsStudentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="teu-Dq-jRm"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ptl-fH-OYL"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dCf-Jt-BXZ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="WHn-yn-cqY">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="WHn-yn-cqY" firstAttribute="leading" secondItem="dCf-Jt-BXZ" secondAttribute="leading" id="41X-oL-bZd"/>
+                            <constraint firstItem="WHn-yn-cqY" firstAttribute="top" secondItem="teu-Dq-jRm" secondAttribute="bottom" id="Lsn-IN-3Q3"/>
+                            <constraint firstAttribute="trailing" secondItem="WHn-yn-cqY" secondAttribute="trailing" id="ZGN-vc-sZL"/>
+                            <constraint firstItem="Ptl-fH-OYL" firstAttribute="top" secondItem="WHn-yn-cqY" secondAttribute="bottom" id="ame-7P-Yup"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Tap to add/remove courses" id="UMl-gY-yXx"/>
+                    <connections>
+                        <outlet property="tableView" destination="WHn-yn-cqY" id="duy-bA-ioj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MEn-et-DaP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4223" y="595"/>
         </scene>
         <!--Choose date of birth-->
         <scene sceneID="GzQ-Cb-AZi">
@@ -448,6 +456,56 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qTa-At-StN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-38" y="245"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="oSX-5N-wbW">
+            <objects>
+                <navigationController id="MZK-CE-KHI" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yrk-fO-aJc">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="dUz-kt-ZhH" kind="relationship" relationship="rootViewController" id="BN0-o1-QVE"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Muz-x5-x2I" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4854" y="570"/>
+        </scene>
+        <!--Tap to add/remove courses to teach-->
+        <scene sceneID="lh2-qI-2YE">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="dUz-kt-ZhH" customClass="NVCoursesToAddAsTeacherViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1W4-XA-E3Q"/>
+                        <viewControllerLayoutGuide type="bottom" id="hAp-dZ-HJ2"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="4Mu-I1-jb0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="sON-fe-hXR">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sON-fe-hXR" firstAttribute="leading" secondItem="4Mu-I1-jb0" secondAttribute="leading" id="DaC-tg-zDL"/>
+                            <constraint firstItem="hAp-dZ-HJ2" firstAttribute="top" secondItem="sON-fe-hXR" secondAttribute="bottom" id="JaN-qn-yMJ"/>
+                            <constraint firstAttribute="trailing" secondItem="sON-fe-hXR" secondAttribute="trailing" id="V6A-qI-LHe"/>
+                            <constraint firstItem="sON-fe-hXR" firstAttribute="top" secondItem="1W4-XA-E3Q" secondAttribute="bottom" id="z9R-mz-oSU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Tap to add/remove courses to teach" id="pJH-aM-E3T"/>
+                    <connections>
+                        <outlet property="tableView" destination="sON-fe-hXR" id="1Os-5l-c2W"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vr7-GB-v3p" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5471" y="570"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

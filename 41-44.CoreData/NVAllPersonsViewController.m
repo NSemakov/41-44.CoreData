@@ -95,7 +95,46 @@
     if ([segue.identifier isEqualToString:@"segueEditPerson"]) {
         UINavigationController* nav=segue.destinationViewController;
         NVPersonDetailViewController* pdvc=(NVPersonDetailViewController*)[nav topViewController];
-        pdvc.person=[self.fetchedResultsController objectAtIndexPath:(NSIndexPath *)sender];
+        pdvc.person=[self personWithFetchedResultsControllerForNextVC:(NSIndexPath*)sender];
+       
     }
 }
+#pragma mark - bad idea. Better to split into 2 VC, rather than do this trying to make 2 in 1.
+- (NVPerson* )personWithFetchedResultsControllerForNextVC:(NSIndexPath*) sender
+{
+    
+    NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
+    // Edit the entity name as appropriate.
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NVPerson" inManagedObjectContext:self.managedObjectContext];
+    [fetchRequest setEntity:entity];
+    [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"coursesAsStudent",@"coursesAsTeacher"]];
+    
+    // Set the batch size to a suitable number.
+    [fetchRequest setFetchBatchSize:20];
+    
+    // Edit the sort key as appropriate.
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstName" ascending:YES];
+    NSArray *sortDescriptors = @[sortDescriptor];
+    
+    [fetchRequest setSortDescriptors:sortDescriptors];
+    
+    //NSManagedObjectID *moID=[self.person objectID];
+    NSPredicate* predicate=[NSPredicate predicateWithFormat:@"(SELF = %@)",[self.fetchedResultsController objectAtIndexPath:(NSIndexPath *)sender]];
+    //NSPredicate* predicate=[NSPredicate predicateWithFormat:@"(SELF = %@)",moID];
+    [fetchRequest setPredicate:predicate];
+    // Edit the section name key path and cache name if appropriate.
+    // nil for section name key path means "no sections".
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    aFetchedResultsController.delegate = self;
+    NSError *error = nil;
+    if (![aFetchedResultsController performFetch:&error]) {
+        // Replace this implementation with code to handle the error appropriately.
+        // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        abort();
+    }
+    NVPerson* person=[aFetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    return person;
+}
+
 @end
