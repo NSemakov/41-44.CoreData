@@ -83,7 +83,7 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    self.person=[self.fetchedResultsController sections][0];
+
     return _fetchedResultsController;
 }
 #pragma mark - UITableViewDelegate

@@ -25,6 +25,7 @@
 #pragma mark - actions
 - (void) actionDone: (UIBarButtonItem*) sender {
     NSError* error=[NSError errorWithDomain:@"NVCoursesAsTeacherVC" code:111 userInfo:nil];
+    NSLog(@"array %@",self.person.coursesAsTeacher);
     if ([self.person.managedObjectContext hasChanges]) {
         [self.person.managedObjectContext save:&error];
     }
@@ -81,7 +82,7 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    self.person=[self.fetchedResultsController sections][0];
+    
     return _fetchedResultsController;
 }
 #pragma mark - UITableViewDelegate
@@ -93,6 +94,7 @@
         cell.accessoryType=UITableViewCellAccessoryNone;
     } else {
         [self.person addCoursesAsTeacherObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        NSLog(@"did select");
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }
 }
@@ -101,7 +103,8 @@
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
     NVCourse *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    if ([self.person.coursesAsStudent containsObject:object]) {
+    NSLog(@"name of student %@",self.person.coursesAsTeacher);
+    if ([self.person.coursesAsTeacher containsObject:object]) {
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }
     cell.textLabel.text = object.name;
