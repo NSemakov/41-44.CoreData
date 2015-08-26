@@ -9,6 +9,8 @@
 #import "NVCoursesToAddAsStudentViewController.h"
 #import "NVPerson.h"
 #import "NVCourse.h"
+#import "NVPersonDetailViewController.h"
+
 @interface NVCoursesToAddAsStudentViewController ()
 
 @end
@@ -17,6 +19,9 @@
 @synthesize fetchedResultsController=_fetchedResultsController;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.arrayToRemove=[NSMutableArray new];
+    self.arrayToAdd=[NSMutableArray new];
+    
     UIBarButtonItem* buttonDone=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(actionDone:)];
     UIBarButtonItem* buttonCancel=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(actionCancel:)];
     self.navigationItem.rightBarButtonItems=@[buttonDone];
@@ -24,11 +29,16 @@
 }
 #pragma mark - actions
 - (void) actionDone: (UIBarButtonItem*) sender {
+    [self.person addCoursesAsStudent:[NSSet setWithArray:self.arrayToAdd]];
+    [self.person removeCoursesAsStudent:[NSSet setWithArray:self.arrayToRemove]];
+    [self.delegate refreshTableView];
+    //[self.delegate.tableView reloadData];
+    /*
     NSError* error=[NSError errorWithDomain:@"NVCoursesVC" code:111 userInfo:nil];
     if ([self.person.managedObjectContext hasChanges]) {
-        [self.person.managedObjectContext save:&error];
+        //[self.person.managedObjectContext save:&error];
     }
-    
+    */
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -90,11 +100,22 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
+    NVCourse* selectedCourse=[self.fetchedResultsController objectAtIndexPath:indexPath];
     if (cell.accessoryType==UITableViewCellAccessoryCheckmark) {
-        [self.person removeCoursesAsStudentObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        if ([self.arrayToAdd containsObject:selectedCourse]) {
+            [self.arrayToAdd removeObject:selectedCourse];
+        } else {
+            [self.arrayToRemove addObject:selectedCourse];
+        }
+        //[self.person removeCoursesAsStudentObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         cell.accessoryType=UITableViewCellAccessoryNone;
     } else {
-        [self.person addCoursesAsStudentObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        if ([self.arrayToRemove containsObject:selectedCourse]) {
+            [self.arrayToRemove removeObject:selectedCourse];
+        } else {
+            [self.arrayToAdd addObject:selectedCourse];
+        }
+        //[self.person addCoursesAsStudentObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
          cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }
 }

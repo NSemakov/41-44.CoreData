@@ -9,7 +9,18 @@
 #import "NVParentViewController.h"
 @class NVPerson;
 @class NVPersonDetailViewController;
+
+
+
 @interface NVCoursesToAddAsTeacherViewController : NVParentViewController
 @property (strong,nonatomic) NVPerson* person;
 @property (strong,nonatomic) NVPersonDetailViewController* delegate;
+
+@property (strong,nonatomic) NSMutableArray* arrayToRemove;
+@property (strong, nonatomic) NSMutableArray* arrayToAdd;
+@end
+
+
+@protocol NVCoursesToAddAsTeacherViewControllerDelegate
+- (void) refreshTableView;
 @end

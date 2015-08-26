@@ -10,8 +10,11 @@
 
 #import "NVParentViewController.h"
 #import <CoreData/CoreData.h>
-@class NVCourse;
-@interface NVCourseDetailViewController : NVParentViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate>
+#import "NVCourse.h"
+//@class NVCourse;
+@protocol NVCoursesToAddAsStudentViewControllerDelegate;
+
+@interface NVCourseDetailViewController : NVParentViewController <UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, NVCoursesToAddAsStudentViewControllerDelegate>
 - (IBAction)actionCancelButton:(UIBarButtonItem *)sender;
 
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;

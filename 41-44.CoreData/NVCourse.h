@@ -2,7 +2,7 @@
 //  NVCourse.h
 //  41-44.CoreData
 //
-//  Created by Admin on 24.08.15.
+//  Created by Admin on 26.08.15.
 //  Copyright (c) 2015 Admin. All rights reserved.
 //
 
@@ -10,25 +10,20 @@
 #import <CoreData/CoreData.h>
 #import "NVParentObject.h"
 
-@class NSManagedObject;
+@class NVPerson;
 
 @interface NVCourse : NVParentObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) NSSet *students;
-@property (nonatomic, retain) NSSet *teachers;
+@property (nonatomic, retain) NVPerson *teachers;
 @end
 
 @interface NVCourse (CoreDataGeneratedAccessors)
 
-- (void)addStudentsObject:(NSManagedObject *)value;
-- (void)removeStudentsObject:(NSManagedObject *)value;
+- (void)addStudentsObject:(NVPerson *)value;
+- (void)removeStudentsObject:(NVPerson *)value;
 - (void)addStudents:(NSSet *)values;
 - (void)removeStudents:(NSSet *)values;
-
-- (void)addTeachersObject:(NSManagedObject *)value;
-- (void)removeTeachersObject:(NSManagedObject *)value;
-- (void)addTeachers:(NSSet *)values;
-- (void)removeTeachers:(NSSet *)values;
 
 @end

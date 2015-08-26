@@ -7,18 +7,14 @@
 //
 
 #import "NVParentViewController.h"
-@class NVPerson;
-@class NVPersonDetailViewController;
-@interface NVCoursesToAddAsStudentViewController : NVParentViewController
-@property (strong,nonatomic) NVPerson* person;
+@class NVCourse;
+@class NVCourseDetailViewController;
+@interface NVStudentsToAddForCourseViewController : NVParentViewController
+@property (strong,nonatomic) NVCourse* course;
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong,nonatomic) NSMutableArray* arrayToRemove;
 @property (strong, nonatomic) NSMutableArray* arrayToAdd;
-@property (strong,nonatomic) NVPersonDetailViewController* delegate;
+@property (strong,nonatomic) NVCourseDetailViewController* delegate;
 
 @end
 
-
-@protocol NVCoursesToAddAsStudentViewControllerDelegate
-- (void) refreshTableView;
-@end

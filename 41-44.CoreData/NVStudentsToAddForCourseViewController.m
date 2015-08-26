@@ -1,27 +1,27 @@
 //
-//  NVCoursesToAddAsTeacherViewController.m
+//  NVCoursesToAddViewController.m
 //  41-44.CoreData
 //
 //  Created by Admin on 25.08.15.
 //  Copyright (c) 2015 Admin. All rights reserved.
 //
 
-#import "NVCoursesToAddAsTeacherViewController.h"
 #import "NVPerson.h"
 #import "NVCourse.h"
-#import "NVPersonDetailViewController.h"
+#import "NVStudentsToAddForCourseViewController.h"
+#import "NVCourseDetailViewController.h"
+#import "NVCoursesToAddAsStudentViewController.h"
 
-@interface NVCoursesToAddAsTeacherViewController ()
+@interface NVStudentsToAddForCourseViewController ()
 
 @end
 
-@implementation NVCoursesToAddAsTeacherViewController
+@implementation NVStudentsToAddForCourseViewController
 @synthesize fetchedResultsController=_fetchedResultsController;
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.arrayToRemove=[NSMutableArray new];
     self.arrayToAdd=[NSMutableArray new];
-    
     
     UIBarButtonItem* buttonDone=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(actionDone:)];
     UIBarButtonItem* buttonCancel=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(actionCancel:)];
@@ -30,28 +30,27 @@
 }
 #pragma mark - actions
 - (void) actionDone: (UIBarButtonItem*) sender {
-    [self.person addCoursesAsTeacher:[NSSet setWithArray:self.arrayToAdd]];
-    [self.person removeCoursesAsTeacher:[NSSet setWithArray:self.arrayToRemove]];
-    NSLog(@"all courses as teacher after %@",self.person.coursesAsTeacher);
+    [self.course addStudents:[NSSet setWithArray:self.arrayToAdd]];
+    [self.course removeStudents:[NSSet setWithArray:self.arrayToRemove]];
     [self.delegate refreshTableView];
     //[self.delegate.tableView reloadData];
     /*
-    NSError* error=[NSError errorWithDomain:@"NVCoursesAsTeacherVC" code:111 userInfo:nil];
-    NSLog(@"array %@",self.person.coursesAsTeacher);
+    NSError* error=[NSError errorWithDomain:@"NVCoursesVC" code:111 userInfo:nil];
     if ([self.person.managedObjectContext hasChanges]) {
         //[self.person.managedObjectContext save:&error];
     }
-    [self.delegate.tableView setNeedsDisplay];
-     */
+    */
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (void) actionCancel: (UIBarButtonItem*) sender {
-    [self.person.managedObjectContext rollback];
+    [self.course.managedObjectContext rollback];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:YES];
-    
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -66,7 +65,7 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NVCourse" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NVPerson" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     //[fetchRequest setRelationshipKeyPathsForPrefetching:@[@"coursesAsStudent",@"coursesAsTeacher"]];
     
@@ -74,7 +73,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstName" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -95,46 +94,41 @@
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
+
     return _fetchedResultsController;
 }
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
-    //
-    NVCourse* selectedCourse=[self.fetchedResultsController objectAtIndexPath:indexPath];
+    NVPerson* selectedObject=[self.fetchedResultsController objectAtIndexPath:indexPath];
     if (cell.accessoryType==UITableViewCellAccessoryCheckmark) {
-        if ([self.arrayToAdd containsObject:selectedCourse]) {
-            [self.arrayToAdd removeObject:selectedCourse];
+        if ([self.arrayToAdd containsObject:selectedObject]) {
+            [self.arrayToAdd removeObject:selectedObject];
         } else {
-            [self.arrayToRemove addObject:selectedCourse];
+            [self.arrayToRemove addObject:selectedObject];
         }
         //[self.person removeCoursesAsStudentObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
         cell.accessoryType=UITableViewCellAccessoryNone;
     } else {
-        if ([self.arrayToRemove containsObject:selectedCourse]) {
-            [self.arrayToRemove removeObject:selectedCourse];
+        if ([self.arrayToRemove containsObject:selectedObject]) {
+            [self.arrayToRemove removeObject:selectedObject];
         } else {
-            [self.arrayToAdd addObject:selectedCourse];
+            [self.arrayToAdd addObject:selectedObject];
         }
         //[self.person addCoursesAsStudentObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
-        cell.accessoryType=UITableViewCellAccessoryCheckmark;
+         cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }
-    ///
-    
-
 }
 
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
-    NVCourse *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSLog(@"all courses as teacher before %@",self.person.coursesAsTeacher);
-    if ([self.person.coursesAsTeacher containsObject:object]) {
+    NVPerson *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    if ([self.course.students containsObject:object]) {
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }
-    cell.textLabel.text = object.name;
-    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",object.firstName,object.lastName];
+
 }
 @end

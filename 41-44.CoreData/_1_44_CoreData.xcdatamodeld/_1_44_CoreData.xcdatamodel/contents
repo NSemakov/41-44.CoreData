@@ -3,7 +3,7 @@
     <entity name="NVCourse" representedClassName="NVCourse" parentEntity="NVParentObject" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="students" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NVPerson" inverseName="coursesAsStudent" inverseEntity="NVPerson" syncable="YES"/>
-        <relationship name="teachers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NVPerson" inverseName="coursesAsTeacher" inverseEntity="NVPerson" syncable="YES"/>
+        <relationship name="teachers" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="NVPerson" inverseName="coursesAsTeacher" inverseEntity="NVPerson" syncable="YES"/>
     </entity>
     <entity name="NVParentObject" representedClassName="NVParentObject" syncable="YES"/>
     <entity name="NVPerson" representedClassName="NVPerson" parentEntity="NVParentObject" syncable="YES">
@@ -15,8 +15,8 @@
         <relationship name="coursesAsTeacher" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NVCourse" inverseName="teachers" inverseEntity="NVCourse" syncable="YES"/>
     </entity>
     <elements>
-        <element name="NVPerson" positionX="-279" positionY="665" width="128" height="133"/>
         <element name="NVCourse" positionX="-560" positionY="695" width="128" height="88"/>
         <element name="NVParentObject" positionX="-423" positionY="531" width="128" height="43"/>
+        <element name="NVPerson" positionX="-279" positionY="665" width="128" height="133"/>
     </elements>
 </model>

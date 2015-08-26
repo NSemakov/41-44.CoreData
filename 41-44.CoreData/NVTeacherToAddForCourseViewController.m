@@ -6,21 +6,20 @@
 //  Copyright (c) 2015 Admin. All rights reserved.
 //
 
-#import "NVCoursesToAddAsTeacherViewController.h"
+#import "NVTeacherToAddForCourseViewController.h"
 #import "NVPerson.h"
 #import "NVCourse.h"
-#import "NVPersonDetailViewController.h"
-
-@interface NVCoursesToAddAsTeacherViewController ()
+#import "NVCourseDetailViewController.h"
+#import "NVCoursesToAddAsStudentViewController.h"
+@interface NVTeacherToAddForCourseViewController ()
 
 @end
 
-@implementation NVCoursesToAddAsTeacherViewController
+@implementation NVTeacherToAddForCourseViewController
 @synthesize fetchedResultsController=_fetchedResultsController;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.arrayToRemove=[NSMutableArray new];
-    self.arrayToAdd=[NSMutableArray new];
+
     
     
     UIBarButtonItem* buttonDone=[[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(actionDone:)];
@@ -30,9 +29,9 @@
 }
 #pragma mark - actions
 - (void) actionDone: (UIBarButtonItem*) sender {
-    [self.person addCoursesAsTeacher:[NSSet setWithArray:self.arrayToAdd]];
-    [self.person removeCoursesAsTeacher:[NSSet setWithArray:self.arrayToRemove]];
-    NSLog(@"all courses as teacher after %@",self.person.coursesAsTeacher);
+    self.course.teachers = self.selectedTeacher;
+
+    //NSLog(@"all courses as teacher after %@",[self.course.teachers firstName]);
     [self.delegate refreshTableView];
     //[self.delegate.tableView reloadData];
     /*
@@ -46,7 +45,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void) actionCancel: (UIBarButtonItem*) sender {
-    [self.person.managedObjectContext rollback];
+    [self.course.managedObjectContext rollback];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void) viewDidAppear:(BOOL)animated {
@@ -66,7 +65,7 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NVCourse" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NVPerson" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     //[fetchRequest setRelationshipKeyPathsForPrefetching:@[@"coursesAsStudent",@"coursesAsTeacher"]];
     
@@ -74,7 +73,7 @@
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstName" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
@@ -103,38 +102,31 @@
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UITableViewCell *cell=[tableView cellForRowAtIndexPath:indexPath];
     //
-    NVCourse* selectedCourse=[self.fetchedResultsController objectAtIndexPath:indexPath];
+    NVPerson* selectedObject=[self.fetchedResultsController objectAtIndexPath:indexPath];
     if (cell.accessoryType==UITableViewCellAccessoryCheckmark) {
-        if ([self.arrayToAdd containsObject:selectedCourse]) {
-            [self.arrayToAdd removeObject:selectedCourse];
-        } else {
-            [self.arrayToRemove addObject:selectedCourse];
-        }
-        //[self.person removeCoursesAsStudentObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        self.selectedTeacher=nil;
         cell.accessoryType=UITableViewCellAccessoryNone;
     } else {
-        if ([self.arrayToRemove containsObject:selectedCourse]) {
-            [self.arrayToRemove removeObject:selectedCourse];
-        } else {
-            [self.arrayToAdd addObject:selectedCourse];
-        }
-        //[self.person addCoursesAsStudentObject:[self.fetchedResultsController objectAtIndexPath:indexPath]];
+        NSIndexPath* previousSelectedIndexPath=[self.fetchedResultsController indexPathForObject:self.selectedTeacher];
+        UITableViewCell* previousSelectedCell=[tableView cellForRowAtIndexPath:previousSelectedIndexPath];
+        previousSelectedCell.accessoryType=UITableViewCellAccessoryNone;
+        
+        self.selectedTeacher=selectedObject;
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
     }
-    ///
-    
 
 }
 
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     
-    NVCourse *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
-    NSLog(@"all courses as teacher before %@",self.person.coursesAsTeacher);
-    if ([self.person.coursesAsTeacher containsObject:object]) {
+    NVPerson *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    //NSLog(@"all courses as teacher before %@",self.person.coursesAsTeacher);
+    if ([self.course.teachers isEqual:object]) {
         cell.accessoryType=UITableViewCellAccessoryCheckmark;
+        self.selectedTeacher=object;
     }
-    cell.textLabel.text = object.name;
-    
+    cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",object.firstName,object.lastName];
+
 }
 @end
