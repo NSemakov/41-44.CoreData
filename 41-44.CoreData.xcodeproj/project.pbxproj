@@ -30,6 +30,7 @@
 		84ECAC5C1B8DC494006F2488 /* NVCourse.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECAC5B1B8DC494006F2488 /* NVCourse.m */; };
 		84ECAC611B8DD402006F2488 /* NVStudentsToAddForCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECAC601B8DD401006F2488 /* NVStudentsToAddForCourseViewController.m */; };
 		84ECAC641B8DD429006F2488 /* NVTeacherToAddForCourseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECAC631B8DD429006F2488 /* NVTeacherToAddForCourseViewController.m */; };
+		84ECAC661B8DF94E006F2488 /* NVAllTeachersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ECAC651B8DF94E006F2488 /* NVAllTeachersViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,8 @@
 		84ECAC601B8DD401006F2488 /* NVStudentsToAddForCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVStudentsToAddForCourseViewController.m; sourceTree = "<group>"; };
 		84ECAC621B8DD41A006F2488 /* NVTeacherToAddForCourseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVTeacherToAddForCourseViewController.h; sourceTree = "<group>"; };
 		84ECAC631B8DD429006F2488 /* NVTeacherToAddForCourseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVTeacherToAddForCourseViewController.m; sourceTree = "<group>"; };
+		84ECAC651B8DF94E006F2488 /* NVAllTeachersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NVAllTeachersViewController.m; sourceTree = "<group>"; };
+		84ECAC671B8DF95A006F2488 /* NVAllTeachersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NVAllTeachersViewController.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +207,8 @@
 			children = (
 				84E4A8151B8B9A0A00B68722 /* NVParentViewController.h */,
 				84E4A8161B8B9A0A00B68722 /* NVParentViewController.m */,
+				84ECAC671B8DF95A006F2488 /* NVAllTeachersViewController.h */,
+				84ECAC651B8DF94E006F2488 /* NVAllTeachersViewController.m */,
 				84E4A8211B8BAED500B68722 /* NVAllPersonsViewController.h */,
 				84E4A8221B8BAED500B68722 /* NVAllPersonsViewController.m */,
 				84BBBD3B1B8CDA43003DE51D /* NVAllCoursesViewController.h */,
@@ -353,6 +358,7 @@
 				84ECAC5C1B8DC494006F2488 /* NVCourse.m in Sources */,
 				84E4A7B01B8B905500B68722 /* AppDelegate.m in Sources */,
 				84ECAC611B8DD402006F2488 /* NVStudentsToAddForCourseViewController.m in Sources */,
+				84ECAC661B8DF94E006F2488 /* NVAllTeachersViewController.m in Sources */,
 				84E4A7AD1B8B905500B68722 /* main.m in Sources */,
 				84E4A8271B8BBF5200B68722 /* NVPersonDetailViewController.m in Sources */,
 				84ECAC641B8DD429006F2488 /* NVTeacherToAddForCourseViewController.m in Sources */,

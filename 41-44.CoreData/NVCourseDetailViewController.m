@@ -101,19 +101,41 @@ typedef NS_ENUM(NSInteger, textFieldType){
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([self.course.name length]>0) {
-        //editing object
-        //NSLog(@"asstudent %d asteacher %d",[self.person.coursesAsStudent count]>0,[self.person.coursesAsTeacher count]==0);
-        
-        return 1+([self.course.students count]>0)+(![self.course.teachers isEqual:nil]);
-        
-    } else {
-        //create new
-        return 1;
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle==UITableViewCellEditingStyleDelete) {
+        BOOL isLastItemAtSection=0;
+        if (indexPath.section==1) {
+            if (!([self.course.students count]==0)) {
+                NSArray* array=[self.course.students allObjects];
+                NVPerson* object=[array objectAtIndex:indexPath.row];
+                [self.course removeStudents:[NSSet setWithObject:object]];
+                isLastItemAtSection= ([self.course.students count]==0) ? 1:0;
+            } else {
+                self.course.teachers=nil;
+                isLastItemAtSection= (!self.course.teachers) ? 1:0;
+            }
+        } else if (indexPath.section==2){
+            self.course.teachers=nil;
+            isLastItemAtSection= (!self.course.teachers) ? 1:0;
+        }
+        [tableView beginUpdates];
+        if (isLastItemAtSection) {
+            NSIndexSet* indexSet=[NSIndexSet indexSetWithIndex:indexPath.section];
+            [tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
+   
+        [tableView endUpdates];
     }
     
+}
+
+
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 1+([self.course.students count]>0)+(self.course.teachers ? 1:0);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
@@ -133,8 +155,6 @@ typedef NS_ENUM(NSInteger, textFieldType){
     }
 }
 
-
-
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
     
     if (section==0) {
@@ -152,10 +172,6 @@ typedef NS_ENUM(NSInteger, textFieldType){
     }
     
 }
-
-
-
-
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell* cell=nil;
@@ -187,12 +203,12 @@ typedef NS_ENUM(NSInteger, textFieldType){
     //
     if (indexPath.section==1) {
         if (!([self.course.students count]==0)) {
-            cell.textLabel.text=[[[self.course.students allObjects] objectAtIndex:indexPath.row] firstName];
+            cell.textLabel.text=cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",[[[self.course.students allObjects] objectAtIndex:indexPath.row] firstName],[[[self.course.students allObjects] objectAtIndex:indexPath.row] lastName]] ;
         } else {
-            cell.textLabel.text=[self.course.teachers firstName];
+            cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",[self.course.teachers firstName],[self.course.teachers lastName]] ;
         }
     } else if (indexPath.section==2){
-        cell.textLabel.text=[self.course.teachers firstName];
+        cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",[self.course.teachers firstName],[self.course.teachers lastName]] ;
     }
     //
 
@@ -248,6 +264,7 @@ typedef NS_ENUM(NSInteger, textFieldType){
     NSError* error=[NSError errorWithDomain:@"addCourseDetailVC" code:111 userInfo:nil];
     if (![[[NVDataManager sharedManager] managedObjectContext] save:&error]) {
         NSLog(@"error %@",[error description]);
+        
     }
     [self.navigationController popViewControllerAnimated:YES];
 }

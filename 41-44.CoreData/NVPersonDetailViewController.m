@@ -36,6 +36,7 @@ typedef NS_ENUM(NSInteger, textFieldType){
     //if editing, i.e. self.person was passed, then refetch with relationship prefetch.
     if (self.person) {
         self.person=[self.fetchedResultsController objectAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+        NSLog(@"array of courses students %@",self.person.coursesAsStudent);
     }
     
 }
@@ -93,23 +94,48 @@ typedef NS_ENUM(NSInteger, textFieldType){
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }
-    
+    NSLog(@"end of fetch");
     return _fetchedResultsController;
 }
 
 #pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if ([self.person.firstName length]>0) {
-        //editing object
-        //NSLog(@"asstudent %d asteacher %d",[self.person.coursesAsStudent count]>0,[self.person.coursesAsTeacher count]==0);
-        return 1+([self.person.coursesAsStudent count]>0)+([self.person.coursesAsTeacher count]>0);
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (editingStyle==UITableViewCellEditingStyleDelete) {
+        BOOL isLastItemAtSection=0;
+        if (indexPath.section==1) {
+            if (!([self.person.coursesAsStudent count]==0)) {
+                NSArray* array=[self.person.coursesAsStudent allObjects];
+                NVCourse* course=[array objectAtIndex:indexPath.row];
+                [self.person removeCoursesAsStudent:[NSSet setWithObject:course]];
+                isLastItemAtSection= ([self.person.coursesAsStudent count]==0) ? 1:0;
+            } else {
+                NSArray* array=[self.person.coursesAsTeacher allObjects];
+                NVCourse* course=[array objectAtIndex:indexPath.row];
+                [self.person removeCoursesAsTeacher:[NSSet setWithObject:course]];
+                isLastItemAtSection= ([self.person.coursesAsTeacher count]==0) ? 1:0;
+            }
+        } else if (indexPath.section==2){
+            NSArray* array=[self.person.coursesAsTeacher allObjects];
+            NVCourse* course=[array objectAtIndex:indexPath.row];
+            [self.person removeCoursesAsTeacher:[NSSet setWithObject:course]];
+            isLastItemAtSection= ([self.person.coursesAsTeacher count]==0) ? 1:0;
+        }
+        [tableView beginUpdates];
+        if (isLastItemAtSection) {
+            NSIndexSet* indexSet=[NSIndexSet indexSetWithIndex:indexPath.section];
+            [tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+        } else {
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        }
         
-    } else {
-        //create new
-        return 1;
+        
+        [tableView endUpdates]; 
     }
     
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
+    return 1+([self.person.coursesAsStudent count]>0)+([self.person.coursesAsTeacher count]>0);
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
 
@@ -122,6 +148,7 @@ typedef NS_ENUM(NSInteger, textFieldType){
             return [self.person.coursesAsTeacher count];
         }
     } else if (section==2){
+        NSLog(@"%ld",[self.person.coursesAsTeacher count]);
         return [self.person.coursesAsTeacher count];
     } else {
         return 0;
@@ -144,6 +171,7 @@ typedef NS_ENUM(NSInteger, textFieldType){
     }
 
 }
+#pragma mark - cell for row at index path
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell* cell=nil;
 
@@ -286,7 +314,9 @@ typedef NS_ENUM(NSInteger, textFieldType){
     NSError* error=[NSError errorWithDomain:@"nvpersonDetailVC" code:111 userInfo:nil];
     if (![[[NVDataManager sharedManager] managedObjectContext] save:&error]) {
         NSLog(@"error %@",[error description]);
+        [[[NVDataManager sharedManager] managedObjectContext] rollback];
     }
+    
     [self.navigationController popViewControllerAnimated:YES];
 
 }

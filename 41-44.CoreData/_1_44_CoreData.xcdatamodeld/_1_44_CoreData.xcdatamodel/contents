@@ -8,7 +8,7 @@
     <entity name="NVParentObject" representedClassName="NVParentObject" syncable="YES"/>
     <entity name="NVPerson" representedClassName="NVPerson" parentEntity="NVParentObject" syncable="YES">
         <attribute name="dateOfBirth" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="firstName" optional="YES" attributeType="String" regularExpressionString="^[a-zA-Z]+$" syncable="YES"/>
         <attribute name="lastName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="mail" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="coursesAsStudent" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="NVCourse" inverseName="students" inverseEntity="NVCourse" syncable="YES"/>

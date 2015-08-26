@@ -75,6 +75,14 @@
     return _fetchedResultsController;
 }
 #pragma mark - UITableViewDataSource
+- (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+    /*
+    if (self.tableView.editing) {
+        return UITableViewCellEditingStyleDelete;
+    }
+     */
+    return UITableViewCellEditingStyleNone;
+}
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
@@ -92,7 +100,7 @@
         //NVPersonDetailViewController* pdvc=[nav topViewController];
         
     }
-#warning pay attention at segue identifier
+
     if ([segue.identifier isEqualToString:@"segueEditCourse"]) {
         NVCourseDetailViewController* pdvc=segue.destinationViewController;
         pdvc.course=[self.fetchedResultsController objectAtIndexPath:(NSIndexPath *)sender];

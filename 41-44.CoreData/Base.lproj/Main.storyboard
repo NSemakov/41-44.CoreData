@@ -5,25 +5,6 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Item3-->
-        <scene sceneID="tne-QT-ifu">
-            <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="Item3" id="MLb-bx-P8z"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="119" y="1748"/>
-        </scene>
         <!--Students-->
         <scene sceneID="ehA-9n-QZW">
             <objects>
@@ -87,6 +68,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionSearchBar" destination="Dik-MV-Wj1" id="Wj4-uP-H0l"/>
                         <outlet property="tableView" destination="5oi-DW-Q35" id="Cv4-uV-mT1"/>
                         <segue destination="57a-DD-fA5" kind="show" identifier="segueEditPerson" id="QIB-cp-dgZ"/>
                     </connections>
@@ -424,8 +406,8 @@
                     </tabBar>
                     <connections>
                         <segue destination="UrQ-cF-imq" kind="relationship" relationship="viewControllers" id="FNX-WS-r7A"/>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="ztX-Gi-GTB"/>
                         <segue destination="v4G-yr-3YS" kind="relationship" relationship="viewControllers" id="SIp-2E-22b"/>
+                        <segue destination="8q6-th-iK6" kind="relationship" relationship="viewControllers" id="6im-Jw-tKZ"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qTa-At-StN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -751,9 +733,79 @@
             </objects>
             <point key="canvasLocation" x="5554" y="1444"/>
         </scene>
+        <!--Teachers-->
+        <scene sceneID="nYf-k9-Di0">
+            <objects>
+                <navigationController id="8q6-th-iK6" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Teachers" id="DTF-Mp-6AI"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="teP-jx-d1M">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="yOE-GT-gdk" kind="relationship" relationship="rootViewController" id="tsp-DS-ugi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Npf-sd-GD7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="446" y="2262"/>
+        </scene>
+        <!--Teachers-->
+        <scene sceneID="nsg-R0-Se4">
+            <objects>
+                <viewController id="yOE-GT-gdk" customClass="NVAllTeachersViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0X4-4D-TXa"/>
+                        <viewControllerLayoutGuide type="bottom" id="HHY-Do-fWp"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="g76-av-SfT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="rEe-GF-T4F">
+                                <rect key="frame" x="0.0" y="64" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Des-wy-eSQ">
+                                <rect key="frame" x="0.0" y="108" width="600" height="443"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="yOE-GT-gdk" id="UB6-bl-xoJ"/>
+                                    <outlet property="delegate" destination="yOE-GT-gdk" id="7A3-rZ-2Nf"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="rEe-GF-T4F" secondAttribute="trailing" id="7fm-bY-48N"/>
+                            <constraint firstItem="HHY-Do-fWp" firstAttribute="top" secondItem="Des-wy-eSQ" secondAttribute="bottom" id="KsZ-EH-x2A"/>
+                            <constraint firstItem="rEe-GF-T4F" firstAttribute="leading" secondItem="g76-av-SfT" secondAttribute="leading" id="cjY-xl-PH3"/>
+                            <constraint firstAttribute="trailing" secondItem="Des-wy-eSQ" secondAttribute="trailing" id="fCw-pV-ecR"/>
+                            <constraint firstItem="Des-wy-eSQ" firstAttribute="leading" secondItem="g76-av-SfT" secondAttribute="leading" id="nUf-Tm-UR4"/>
+                            <constraint firstItem="Des-wy-eSQ" firstAttribute="top" secondItem="rEe-GF-T4F" secondAttribute="bottom" id="oC5-fs-Nuq"/>
+                            <constraint firstItem="rEe-GF-T4F" firstAttribute="top" secondItem="0X4-4D-TXa" secondAttribute="bottom" id="wBf-cs-43R"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="" id="c2N-gJ-nnE"/>
+                    <navigationItem key="navigationItem" title="Teachers" id="Fgg-Ha-6qJ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="v57-Q1-D00">
+                            <connections>
+                                <action selector="actionAddNewPerson:" destination="yOE-GT-gdk" id="1dA-5F-50n"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="Des-wy-eSQ" id="Ugd-vh-mfy"/>
+                        <segue destination="57a-DD-fA5" kind="show" identifier="segueShowDetail" id="POm-uC-1ZO"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UNS-I9-BTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1194" y="2262"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="9BT-g1-RaB"/>
-        <segue reference="QIB-cp-dgZ"/>
+        <segue reference="hWu-hK-3o1"/>
     </inferredMetricsTieBreakers>
 </document>

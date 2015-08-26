@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 Admin. All rights reserved.
 //
 
-#import "NVAllPersonsViewController.h"
+#import "NVAllTeachersViewController.h"
 #import "NVPersonDetailViewController.h"
-
+#import "NVCourse.h"
 #import "NVPerson.h"
-@interface NVAllPersonsViewController ()
+@interface NVAllTeachersViewController ()
 
 @end
 
-@implementation NVAllPersonsViewController
+@implementation NVAllTeachersViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -28,7 +28,7 @@
 }
 
 - (void)configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    NVPerson *object = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    NVPerson *object = [[self.fetchedResultsController objectAtIndexPath:indexPath] teachers];
     cell.textLabel.text = [NSString stringWithFormat:@"%@ %@",object.firstName, object.lastName];
     cell.accessoryType=UITableViewCellAccessoryDisclosureIndicator;
     // [object valueForKey:@"firstName"];
@@ -47,21 +47,24 @@
     
     NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
     // Edit the entity name as appropriate.
-    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NVPerson" inManagedObjectContext:self.managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"NVCourse" inManagedObjectContext:self.managedObjectContext];
     [fetchRequest setEntity:entity];
     
     // Set the batch size to a suitable number.
     [fetchRequest setFetchBatchSize:20];
     
     // Edit the sort key as appropriate.
-    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"firstName" ascending:YES];
+    NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"name" ascending:YES];
     NSArray *sortDescriptors = @[sortDescriptor];
     
     [fetchRequest setSortDescriptors:sortDescriptors];
+    [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"teachers"]];
+    NSPredicate* predicate=[NSPredicate predicateWithFormat:@"teachers!=%d",0];
+    [fetchRequest setPredicate:predicate];
     
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
-    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:nil cacheName:nil];
+    NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"name" cacheName:nil];
     aFetchedResultsController.delegate = self;
     self.fetchedResultsController = aFetchedResultsController;
     
@@ -76,6 +79,10 @@
     return _fetchedResultsController;
 }
 #pragma mark - UITableViewDataSource
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    // Display the authors' names as section headings.
+    return [[[self.fetchedResultsController sections] objectAtIndex:section] name];
+}
 - (UITableViewCellEditingStyle)tableView:(UITableView *)aTableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
     /*
      if (self.tableView.editing) {
@@ -84,10 +91,11 @@
      */
     return UITableViewCellEditingStyleNone;
 }
+
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self performSegueWithIdentifier:@"segueEditPerson" sender:indexPath];
+    [self performSegueWithIdentifier:@"segueShowDetail" sender:indexPath];
     
 }
 
@@ -96,14 +104,10 @@
     //show modal. made in story board
 }
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if ([segue.identifier isEqualToString:@"segueAddNewPerson"]) {
-        //UINavigationController* nav=segue.destinationViewController;
-        //NVPersonDetailViewController* pdvc=[nav topViewController];
-        
-    }
-    if ([segue.identifier isEqualToString:@"segueEditPerson"]) {
+
+    if ([segue.identifier isEqualToString:@"segueShowDetail"]) {
         NVPersonDetailViewController* pdvc=segue.destinationViewController;
-        pdvc.person=[self.fetchedResultsController objectAtIndexPath:(NSIndexPath *)sender];
+        pdvc.person=[[self.fetchedResultsController objectAtIndexPath:(NSIndexPath *)sender] teachers];
     }
 }
 @end
