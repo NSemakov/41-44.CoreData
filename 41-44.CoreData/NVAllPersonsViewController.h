@@ -8,7 +8,7 @@
 
 #import "NVParentViewController.h"
 
-@interface NVAllPersonsViewController : NVParentViewController <UISearchBarDelegate>
+@interface NVAllPersonsViewController : NVParentViewController 
 - (IBAction)actionAddNewPerson:(UIBarButtonItem *)sender;
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet UISearchBar *actionSearchBar;

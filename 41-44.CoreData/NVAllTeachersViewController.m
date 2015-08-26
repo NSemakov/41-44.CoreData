@@ -61,7 +61,7 @@
     [fetchRequest setRelationshipKeyPathsForPrefetching:@[@"teachers"]];
     NSPredicate* predicate=[NSPredicate predicateWithFormat:@"teachers!=%d",0];
     [fetchRequest setPredicate:predicate];
-    
+    self.predicate=predicate;
     // Edit the section name key path and cache name if appropriate.
     // nil for section name key path means "no sections".
     NSFetchedResultsController *aFetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:self.managedObjectContext sectionNameKeyPath:@"name" cacheName:nil];
@@ -98,7 +98,39 @@
     [self performSegueWithIdentifier:@"segueShowDetail" sender:indexPath];
     
 }
+#pragma mark - UISearchBarDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    [searchBar setShowsCancelButton:YES animated:YES];
+    return YES;
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    searchBar.text=@"";
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [self matchTheSearchText:searchBar.text];
+}
 
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    //NSLog(@"%@ %@",searchBar.text,text);
+    [self matchTheSearchText:searchText];
+}
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    return YES;
+}
+- (void) matchTheSearchText:(NSString*) searchText {
+    NSPredicate *predicate=nil;
+    if ([searchText length]>0) {
+        predicate=[NSPredicate predicateWithFormat:@"teachers.firstName contains [cd] %@ OR teachers.lastName contains [cd] %@ ",searchText,searchText];
+        [[self.fetchedResultsController fetchRequest] setPredicate:predicate];
+    } else {
+        [[self.fetchedResultsController fetchRequest] setPredicate:self.predicate];
+    }
+    
+    //[self.fetchedResultsController fetchRequest];
+    [self.fetchedResultsController performFetch:nil];
+    [self.tableView reloadData];
+}
 #pragma mark - Actions
 - (IBAction)actionAddNewPerson:(UIBarButtonItem *)sender {
     //show modal. made in story board

@@ -37,6 +37,9 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Dik-MV-Wj1">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="v2Q-dD-0iB" id="sF3-mw-xAX"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="5oi-DW-Q35">
                                 <rect key="frame" x="0.0" y="108" width="600" height="443"/>
@@ -500,6 +503,9 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="GVu-ZI-fWF">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="KNi-cI-UlC" id="kMz-YM-I58"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="6bj-vj-54p">
                                 <rect key="frame" x="0.0" y="108" width="600" height="443"/>
@@ -765,6 +771,9 @@
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="rEe-GF-T4F">
                                 <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="yOE-GT-gdk" id="ctJ-A9-V2p"/>
+                                </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="Des-wy-eSQ">
                                 <rect key="frame" x="0.0" y="108" width="600" height="443"/>
@@ -806,6 +815,6 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="9BT-g1-RaB"/>
-        <segue reference="hWu-hK-3o1"/>
+        <segue reference="POm-uC-1ZO"/>
     </inferredMetricsTieBreakers>
 </document>

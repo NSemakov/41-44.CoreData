@@ -11,5 +11,5 @@
 @interface NVAllTeachersViewController : NVParentViewController 
 - (IBAction)actionAddNewPerson:(UIBarButtonItem *)sender;
 //@property (weak, nonatomic) IBOutlet UITableView *tableView;
-
+@property(strong,nonatomic) NSPredicate* predicate;
 @end

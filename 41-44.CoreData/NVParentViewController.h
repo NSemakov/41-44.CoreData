@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
-@interface NVParentViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource,UITableViewDelegate>
+@interface NVParentViewController : UIViewController <NSFetchedResultsControllerDelegate, UITableViewDataSource,UITableViewDelegate ,UISearchBarDelegate>
 @property (strong,nonatomic) NSFetchedResultsController*  fetchedResultsController;
 @property (strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (weak,nonatomic) IBOutlet UITableView* tableView;

@@ -83,6 +83,36 @@
      */
     return UITableViewCellEditingStyleNone;
 }
+#pragma mark - UISearchBarDelegate
+- (BOOL)searchBarShouldBeginEditing:(UISearchBar *)searchBar{
+    [searchBar setShowsCancelButton:YES animated:YES];
+    return YES;
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    searchBar.text=@"";
+    [searchBar resignFirstResponder];
+    [searchBar setShowsCancelButton:NO animated:YES];
+    [self matchTheSearchText:searchBar.text];
+}
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText{
+    //NSLog(@"%@ %@",searchBar.text,text);
+    [self matchTheSearchText:searchText];
+}
+- (BOOL)searchBar:(UISearchBar *)searchBar shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    
+    return YES;
+}
+- (void) matchTheSearchText:(NSString*) searchText {
+    NSPredicate *predicate=nil;
+    if ([searchText length]>0) {
+        predicate=[NSPredicate predicateWithFormat:@"name contains [cd] %@",searchText];
+    }
+    
+    [[self.fetchedResultsController fetchRequest] setPredicate:predicate];
+    [self.fetchedResultsController performFetch:nil];
+    [self.tableView reloadData];
+}
 #pragma mark - UITableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
